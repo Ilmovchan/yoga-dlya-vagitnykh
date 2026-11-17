@@ -369,10 +369,10 @@
   .author { background: var(--cream-2); }
   .author-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(40px, 7vw, 110px); align-items: center; }
   .portrait { position: relative; isolation: isolate; }
-  .portrait img { width: 100%; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 36px; box-shadow: var(--shadow); }
+  .portrait img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 36px; box-shadow: var(--shadow); }
   .portrait::before { content: ""; position: absolute; inset: -14px; border-radius: 48px; border: 1px solid var(--rose); transform: rotate(-3deg); z-index: -1; }
   .portrait .badge {
-    position: absolute; bottom: 40px; right: -30px; padding: 20px 24px; border-radius: 22px;
+    position: absolute; top: 34px; right: -30px; padding: 20px 24px; border-radius: 22px;
     background: var(--white); box-shadow: var(--shadow); text-align: center;
   }
   .portrait .badge { max-width: 230px; text-align: left; }
@@ -550,7 +550,8 @@
     .lv-soon { bottom: 12px; font-size: 11px; }
     .pause-card { padding: 32px 20px; }
     .breath-stage { width: 260px; height: 260px; }
-    .portrait .badge { right: 10px; bottom: 20px; }
+    .portrait .badge { right: 10px; top: 12px; max-width: 172px; padding: 12px 16px; }
+    .portrait .badge b { font-size: 17px; }
     .price-card { border-radius: 180px 180px 32px 32px; }
     .timer div { min-width: 70px; }
     .timer b { font-size: 34px; }
