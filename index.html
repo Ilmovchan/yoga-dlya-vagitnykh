@@ -757,7 +757,7 @@
         <div class="arch-outline"></div>
         <img class="hero-lotus" src="assets/lotus.svg" alt="">
         <div class="arch" data-open-video role="button" tabindex="0" aria-label="Дивитися відео-привітання від Анни">
-          <video id="teaser" src="assets/video-teaser.mp4" poster="assets/hero-preview.jpg" autoplay muted loop playsinline preload="auto" disablepictureinpicture></video>
+          <video id="teaser" src="assets/video-teaser.mp4" poster="assets/hero-preview-v2.jpg" autoplay muted loop playsinline preload="auto" disablepictureinpicture></video>
           <div class="arch-caption">
             <div>
               <strong>Привіт, я Анна</strong>
@@ -1231,7 +1231,7 @@
     teaserImg = new Image();
     teaserImg.className = 'teaser-img'; teaserImg.alt = ''; teaserImg.decoding = 'async';
     teaserImg.onload = () => { if (teaserSwapped) { teaser.after(teaserImg); teaser.style.visibility = 'hidden'; } };
-    teaserImg.src = 'assets/hero-preview.jpg';
+    teaserImg.src = 'assets/hero-preview-v2.jpg';
   }
   teaser.addEventListener('timeupdate', () => {
     if (teaserSwapped && teaserIsPlaying()) { teaserSwapped = false; teaser.style.visibility = ''; if (teaserImg) teaserImg.remove(); }
