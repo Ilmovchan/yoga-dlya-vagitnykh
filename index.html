@@ -374,6 +374,9 @@
   .lv-badge .tri { width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center; background: linear-gradient(135deg, var(--rose-deep), var(--coral)); color: #fff; }
   .lv-soon { position: absolute; bottom: 22px; left: 50%; transform: translateX(-50%); font-size: 12px; letter-spacing: .16em; text-transform: uppercase; color: var(--plum-soft); }
   .lv-frame.has-video .lv-lotus, .lv-frame.has-video .lv-soon { display: none; }
+  .lv-frame.has-video .lv-badge { position: absolute; left: -26px; bottom: -26px; }
+  .lv-frame:not(.playing) video::-webkit-media-controls-start-playback-button,
+  .lv-frame:not(.playing) video::-webkit-media-controls-overlay-play-button { display: none !important; -webkit-appearance: none; }
   .lv-frame.playing .lv-badge { opacity: 0; pointer-events: none; }
   .lv-frame:not(.has-video) .lv-badge { cursor: default; }
   .bonus {
@@ -701,6 +704,7 @@
     .lesson-video { padding: 14px 8px; }
     .lv-frame { border-radius: 22px; }
     .lv-badge { width: 112px; height: 112px; }
+    .lv-frame.has-video .lv-badge { left: -8px; bottom: -34px; width: 104px; height: 104px; }
     .lv-badge .ring text { font-size: 11.5px; letter-spacing: 3.4px; font-weight: 700; }
     .lv-soon { bottom: 12px; font-size: 11px; }
     .pause-card { padding: 32px 20px; }
@@ -841,8 +845,7 @@
         <div class="combo">
         <div class="lesson-video reveal">
           <div class="lv-frame" id="lessonFrame">
-            <!-- Фрагмент уроку: додайте сюди
-                 <video src="assets/lesson-fragment.mp4" poster="assets/lesson-fragment.jpg" playsinline preload="none"></video> -->
+            <video src="assets/lesson-fragment.mp4" poster="assets/lesson-fragment.jpg" playsinline preload="none"></video>
             <img class="lv-lotus" src="assets/lotus.svg" alt="">
             <button class="lv-badge" type="button" aria-label="Дивитися фрагмент уроку">
               <svg class="ring" viewBox="0 0 120 120" aria-hidden="true">
