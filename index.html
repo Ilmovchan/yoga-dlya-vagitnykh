@@ -757,7 +757,7 @@
         <div class="arch-outline"></div>
         <img class="hero-lotus" src="assets/lotus.svg" alt="">
         <div class="arch" data-open-video role="button" tabindex="0" aria-label="Дивитися відео-привітання від Анни">
-          <video id="teaser" src="assets/video-teaser.mp4" poster="assets/teaser-poster.jpg" autoplay muted loop playsinline preload="auto" disablepictureinpicture></video>
+          <video id="teaser" src="assets/video-teaser.mp4" poster="assets/hero-preview.jpg" autoplay muted loop playsinline preload="auto" disablepictureinpicture></video>
           <div class="arch-caption">
             <div>
               <strong>Привіт, я Анна</strong>
@@ -1222,21 +1222,26 @@
   // Hero teaser: Safari may refuse autoplay (Low Power Mode, per-site setting) — retry, then start on first tap/click
   const teaser = document.getElementById('teaser');
   teaser.muted = true; teaser.defaultMuted = true;
-  let teaserSwapped = false;
-  // Autoplay refused (Safari Low Power Mode etc.) → show the static preview instead of a stuck video
-  function swapTeaserToImage() {
-    if (teaserSwapped) return; teaserSwapped = true;
-    const img = new Image();
-    img.className = 'teaser-img'; img.alt = ''; img.decoding = 'async';
-    img.onload = () => { teaser.after(img); teaser.style.visibility = 'hidden'; };
-    img.src = 'assets/teaser-poster.jpg';
+  // Autoplay refused or silently stalled (Safari Low Power Mode etc.) → show the static preview instead of a stuck video
+  let teaserSwapped = false, teaserImg = null;
+  // the video may start before this script runs, so check its real state instead of waiting for an event
+  const teaserIsPlaying = () => !teaser.paused && !teaser.ended && teaser.currentTime > 0 && teaser.readyState > 2;
+  function showTeaserImage() {
+    if (teaserSwapped || teaserIsPlaying()) return; teaserSwapped = true;
+    teaserImg = new Image();
+    teaserImg.className = 'teaser-img'; teaserImg.alt = ''; teaserImg.decoding = 'async';
+    teaserImg.onload = () => { if (teaserSwapped) { teaser.after(teaserImg); teaser.style.visibility = 'hidden'; } };
+    teaserImg.src = 'assets/hero-preview.jpg';
   }
+  teaser.addEventListener('timeupdate', () => {
+    if (teaserSwapped && teaserIsPlaying()) { teaserSwapped = false; teaser.style.visibility = ''; if (teaserImg) teaserImg.remove(); }
+  });
   function playTeaser() {
-    if (teaserSwapped) return;
     const p = teaser.play();
-    if (p) p.catch(err => { if (err && err.name === 'NotAllowedError') swapTeaserToImage(); });
+    if (p) p.catch(err => { if (err && err.name === 'NotAllowedError') showTeaserImage(); });
   }
   playTeaser();
+  setTimeout(showTeaserImage, 2500);
   teaser.addEventListener('canplay', playTeaser, { once: true });
   ['pointerdown', 'keydown', 'touchstart'].forEach(ev => addEventListener(ev, () => { if (teaser.paused) playTeaser(); }, { once: true, passive: true }));
   document.addEventListener('visibilitychange', () => { if (!document.hidden && teaser.paused) playTeaser(); });
