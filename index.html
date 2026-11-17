@@ -297,7 +297,6 @@
 
   /* ---------- Feel ---------- */
   .feel { background: var(--plum); color: var(--cream); border-radius: clamp(36px, 6vw, 80px); margin: 0 clamp(8px, 1.5vw, 20px); overflow: hidden; }
-  .author + .feel { margin-top: clamp(20px, 4vw, 50px); }
   .feel .eyebrow { color: var(--rose); }
   .feel h2 em { color: var(--rose); }
   .feel .lead { color: rgba(251,244,241,.75); }
@@ -440,8 +439,9 @@
   .step p { font-size: 15px; color: var(--plum-soft); }
 
   /* ---------- Results ---------- */
-  .results { padding-top: 0; padding-bottom: clamp(36px, 5vw, 64px); }
-  .results + .honest { padding-top: clamp(36px, 5vw, 64px); }
+  .results { padding-top: clamp(50px, 6vw, 80px); padding-bottom: clamp(50px, 6vw, 80px); }
+  #how { padding-bottom: clamp(36px, 5vw, 64px); }
+  #how + .honest { padding-top: clamp(36px, 5vw, 64px); }
   .results-box {
     border-radius: clamp(32px, 5vw, 60px); padding: clamp(40px, 6vw, 80px);
     background: radial-gradient(circle at 90% 10%, #fde4d6, transparent 50%), radial-gradient(circle at 0% 100%, #f2d2dc, transparent 55%), var(--white);
@@ -682,8 +682,9 @@
     .foot-top { margin-bottom: 22px; }
     .foot-cols { gap: 16px; }
     .faq-grid { gap: 20px; }
-    .results { padding-bottom: 20px; }
-    .results + .honest { padding-top: 24px; }
+    .results { padding-top: 32px; padding-bottom: 32px; }
+    #how { padding-bottom: 20px; }
+    #how + .honest { padding-top: 24px; }
     .results-box { padding: 30px 22px; gap: 18px; }
     .results li { padding: 16px 0; }
     .feel { padding-bottom: 40px; }
@@ -923,6 +924,26 @@
     </div>
   </section>
 
+  <!-- RESULTS -->
+  <section class="results">
+    <div class="wrap">
+      <div class="results-box">
+        <div>
+          <span class="eyebrow reveal">Результат</span>
+          <h2 class="reveal d1">Що ти отримаєш, <em>пройшовши курс</em></h2>
+          <p class="lead reveal d2">Уроки розроблені так, щоб ти могла зосередитися на своєму тілі.</p>
+        </div>
+        <ul>
+          <li class="reveal"><i>✓</i>Менше напруги та дискомфорту в тілі</li>
+          <li class="reveal d1"><i>✓</i>Краща рухливість таза й підготовка до пологів</li>
+          <li class="reveal d2"><i>✓</i>Менше тривоги, більше впевненості в собі</li>
+          <li class="reveal d2"><i>✓</i>Дихальні техніки для спокою та розслаблення</li>
+          <li class="reveal d3"><i>✓</i>Глибший контакт із тілом і малюком</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
   <!-- FEEL -->
   <section class="feel" id="for-you">
     <div class="glow"></div>
@@ -979,26 +1000,6 @@
         <div class="step reveal d1"><h3>Закрита група</h3><p>Доступ до закритої телеграм-групи, де зможеш ставити мені запитання.</p></div>
         <div class="step reveal d2"><h3>Рік доступу</h3><p>Доступ до уроків зберігається протягом одного року — переглядай за потреби.</p></div>
         <div class="step reveal d3"><h3>Прямі ефіри</h3><p>Раз на місяць — прямий ефір з відповідями на всі запитання.</p></div>
-      </div>
-    </div>
-  </section>
-
-  <!-- RESULTS -->
-  <section class="results">
-    <div class="wrap">
-      <div class="results-box">
-        <div>
-          <span class="eyebrow reveal">Результат</span>
-          <h2 class="reveal d1">Що ти отримаєш, <em>пройшовши курс</em></h2>
-          <p class="lead reveal d2">Уроки розроблені так, щоб ти могла зосередитися на своєму тілі.</p>
-        </div>
-        <ul>
-          <li class="reveal"><i>✓</i>Менше напруги та дискомфорту в тілі</li>
-          <li class="reveal d1"><i>✓</i>Краща рухливість таза й підготовка до пологів</li>
-          <li class="reveal d2"><i>✓</i>Менше тривоги, більше впевненості в собі</li>
-          <li class="reveal d2"><i>✓</i>Дихальні техніки для спокою та розслаблення</li>
-          <li class="reveal d3"><i>✓</i>Глибший контакт із тілом і малюком</li>
-        </ul>
       </div>
     </div>
   </section>
