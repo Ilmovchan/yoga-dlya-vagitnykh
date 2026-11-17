@@ -529,6 +529,96 @@
   }
   .modal-cta { display: flex; justify-content: center; margin-top: 22px; }
 
+  /* ---------- Checkout (prototype) ---------- */
+  .checkout {
+    position: fixed; inset: 0; z-index: 160; display: grid; place-items: center; padding: 20px;
+    background: rgba(48, 24, 34, .55); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    opacity: 0; visibility: hidden; transition: opacity .45s, visibility .45s;
+  }
+  .checkout.open { opacity: 1; visibility: visible; }
+  .co-panel {
+    position: relative; width: min(940px, 100%); max-height: calc(100dvh - 40px); overflow: auto;
+    display: grid; grid-template-columns: .85fr 1.15fr; border-radius: 32px; background: var(--cream);
+    box-shadow: 0 40px 90px -30px rgba(48,24,34,.6);
+    transform: translateY(24px) scale(.97); transition: transform .6s cubic-bezier(.2,.8,.2,1);
+  }
+  .checkout.open .co-panel { transform: none; }
+  .co-close {
+    position: absolute; top: 16px; right: 16px; z-index: 2; width: 40px; height: 40px; border-radius: 50%;
+    display: grid; place-items: center; font-size: 22px; background: var(--white); box-shadow: inset 0 0 0 1px var(--line);
+  }
+  .co-summary {
+    position: relative; overflow: hidden; padding: 40px 34px; color: var(--cream);
+    background: radial-gradient(circle at 50% 0%, rgba(246,207,168,.2), transparent 50%), linear-gradient(170deg, #3b2230, #4f2c3c 55%, #6e3d50);
+  }
+  .co-lotus { width: 72px; margin-bottom: 18px; }
+  .co-eyebrow { font-size: 11px; letter-spacing: .16em; text-transform: uppercase; color: #f6cfa8; font-weight: 600; }
+  .co-summary h3 { font-size: 34px; font-style: italic; margin: 8px 0 2px; }
+  .co-author { font-size: 14px; color: rgba(251,244,241,.65); }
+  .co-summary ul { list-style: none; margin: 22px 0 26px; display: grid; gap: 10px; }
+  .co-summary li { display: flex; align-items: center; gap: 10px; font-size: 15px; color: rgba(251,244,241,.88); }
+  .co-summary li::before { content: "✓"; flex: none; width: 22px; height: 22px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; background: rgba(233,165,176,.22); color: var(--rose); }
+  .co-price { display: flex; align-items: center; gap: 16px; padding-top: 22px; border-top: 1px solid rgba(255,255,255,.12); }
+  .co-price b { font-family: var(--serif); font-size: 64px; font-weight: 500; line-height: .9; }
+  .co-price b small { font-size: .32em; font-style: italic; margin-left: 4px; }
+  .co-price s { display: block; color: rgba(251,244,241,.5); font-size: 16px; }
+  .co-price .off { display: inline-block; margin-top: 4px; padding: 4px 10px; border-radius: 999px; background: var(--coral); color: #fff; font-size: 12px; font-weight: 700; }
+  .co-timer { margin-top: 14px; font-size: 13px; color: rgba(251,244,241,.7); }
+  .co-timer span { font-variant-numeric: tabular-nums; color: #f6cfa8; font-weight: 600; }
+  .co-guarantee { display: flex; align-items: center; gap: 12px; margin-top: 22px; font-size: 13px; line-height: 1.4; color: rgba(251,244,241,.75); }
+  .co-guarantee span { flex: none; width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; border: 1px dashed var(--rose); font-family: var(--serif); font-size: 20px; color: var(--rose); font-variant-numeric: lining-nums; }
+
+  .co-main { padding: 40px 38px 34px; }
+  .co-form h2, .co-done h2 { font-size: clamp(34px, 3.4vw, 44px); margin: 0 0 6px; }
+  .co-sub { font-size: 14px; color: var(--muted); margin-bottom: 24px; }
+  .co-field { display: block; margin-bottom: 14px; }
+  .co-field > span { display: block; font-size: 13px; font-weight: 600; margin-bottom: 6px; }
+  .co-field small { font-weight: 400; color: var(--muted); }
+  .co-field input {
+    width: 100%; padding: 14px 16px; border-radius: 14px; border: 1px solid var(--line); background: var(--white);
+    font: inherit; font-size: 16px; color: var(--plum); transition: border-color .2s, box-shadow .2s;
+  }
+  .co-field input::placeholder { color: #b9a3aa; }
+  .co-field input:focus { outline: none; border-color: var(--rose); box-shadow: 0 0 0 4px rgba(233,165,176,.25); }
+  .co-err { display: none; font-style: normal; font-size: 12px; color: #c0475d; margin-top: 5px; }
+  .co-field.bad input { border-color: #d9788a; }
+  .co-field.bad .co-err, .co-form.bad-agree .co-err-agree { display: block; }
+  .co-methods { border: 0; margin: 20px 0 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  .co-methods legend { font-size: 13px; font-weight: 600; margin-bottom: 8px; }
+  .co-methods label { cursor: pointer; }
+  .co-methods input { position: absolute; opacity: 0; pointer-events: none; }
+  .co-methods label span {
+    display: block; height: 100%; padding: 12px 14px; border-radius: 14px; background: var(--white); box-shadow: inset 0 0 0 1px var(--line);
+    transition: box-shadow .2s, background .2s;
+  }
+  .co-methods b { display: block; font-size: 14px; }
+  .co-methods small { font-size: 12px; color: var(--muted); }
+  .co-methods input:checked + span { background: var(--blush); box-shadow: inset 0 0 0 2px var(--rose-deep); }
+  .co-methods input:focus-visible + span { box-shadow: inset 0 0 0 2px var(--rose-deep), 0 0 0 4px rgba(233,165,176,.3); }
+  .co-agree { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; color: var(--plum-soft); line-height: 1.45; cursor: pointer; }
+  .co-agree input { flex: none; width: 18px; height: 18px; margin-top: 1px; accent-color: var(--rose-deep); }
+  .co-agree a { color: var(--rose-deep); }
+  .co-pay { width: 100%; justify-content: center; margin-top: 20px; }
+  .co-pay.loading { opacity: .8; pointer-events: none; }
+  .co-pay.loading .arrow { animation: spin 1s linear infinite; }
+  .co-secure { margin-top: 12px; font-size: 12px; color: var(--muted); text-align: center; }
+  .co-done { min-height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 30px 0; }
+  .co-done[hidden], .co-form[hidden] { display: none; }
+  .co-done img { width: 90px; margin-bottom: 16px; }
+  .co-done p { color: var(--plum-soft); max-width: 34ch; margin: 8px 0 18px; }
+  .co-done .co-demo { font-size: 13px; padding: 10px 14px; border-radius: 12px; background: var(--blush); color: var(--plum); }
+  @media (max-width: 760px) {
+    .checkout { padding: 0; place-items: end stretch; }
+    .co-panel { grid-template-columns: 1fr; border-radius: 28px 28px 0 0; max-height: 94dvh; transform: translateY(100%); }
+    .co-summary { padding: 28px 22px 22px; }
+    .co-summary ul, .co-guarantee, .co-lotus { display: none; }
+    .co-summary h3 { font-size: 28px; padding-right: 40px; }
+    .co-price { margin-top: 16px; padding-top: 16px; }
+    .co-price b { font-size: 48px; }
+    .co-main { padding: 26px 20px 30px; }
+    .co-close { background: rgba(255,255,255,.12); color: var(--cream); box-shadow: none; }
+  }
+
   /* sticky mobile cta */
   .sticky-cta {
     position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 60; display: none;
@@ -630,7 +720,7 @@
     <a href="#for-you">Для тебе</a>
     <a href="#faq">Є запитання?</a>
   </nav>
-  <a class="btn" href="#price">Приєднатися <span class="arrow">→</span></a>
+  <a class="btn" href="#price" data-checkout>Приєднатися <span class="arrow">→</span></a>
 </header>
 
 <main id="top">
@@ -651,7 +741,7 @@
         </h1>
         <p class="lead reveal d2">6 відеотренувань для дбайливої підготовки до пологів. У своєму темпі, вдома, з увагою до себе.</p>
         <div class="hero-cta reveal d3">
-          <a class="btn" href="#price">Отримати курс <span class="arrow">→</span></a>
+          <a class="btn" href="#price" data-checkout>Отримати курс <span class="arrow">→</span></a>
           <div class="price-mini">
             <div><small>Спеціальна ціна</small><b>239 ₴</b></div>
             <s>1200 ₴</s>
@@ -948,7 +1038,7 @@
           <div><b data-t="m">00</b><span>хвилин</span></div>
           <div><b data-t="s">00</b><span>секунд</span></div>
         </div>
-        <a class="btn" data-buy href="#">Отримати доступ <span class="arrow">→</span></a>
+        <a class="btn" href="#price" data-checkout>Отримати доступ <span class="arrow">→</span></a>
         <p class="ps">P.S. Ви нічим не ризикуєте. Якщо курс вам не сподобається, я поверну кошти без зайвих запитань.</p>
       </div>
 
@@ -1016,23 +1106,98 @@
 
 <div class="sticky-cta" id="stickyCta">
   <div><b>239 грн</b><s>1200</s></div>
-  <a href="#price">Хочу на курс</a>
+  <a href="#price" data-checkout>Хочу на курс</a>
 </div>
 
 <div class="modal" id="modal" aria-hidden="true">
   <div class="modal-inner" role="dialog" aria-label="Відео-привітання">
     <button class="modal-close" id="modalClose" type="button" aria-label="Закрити">×</button>
     <video id="modalVideo" controls playsinline preload="none" poster="assets/video-poster.jpg"></video>
-    <div class="modal-cta"><a class="btn" href="#price" data-close>Хочу на курс <span class="arrow">→</span></a></div>
+    <div class="modal-cta"><a class="btn" href="#price" data-close data-checkout>Хочу на курс <span class="arrow">→</span></a></div>
+  </div>
+</div>
+
+<!-- Checkout (прототип): форма → startPayment() → сторінка платіжного сервісу -->
+<div class="checkout" id="checkout" aria-hidden="true">
+  <div class="co-panel" role="dialog" aria-modal="true" aria-labelledby="coTitle">
+    <button class="co-close" type="button" data-co-close aria-label="Закрити">×</button>
+
+    <aside class="co-summary">
+      <img class="co-lotus" src="assets/lotus.svg" alt="">
+      <span class="co-eyebrow">Твоє замовлення</span>
+      <h3>Йога для вагітних</h3>
+      <p class="co-author">онлайн-курс Анни Василіогло</p>
+      <ul>
+        <li>6 відеозанять</li>
+        <li>Бонус: казка на ніч</li>
+        <li>Закрита Telegram-група</li>
+        <li>Щомісячні прямі ефіри</li>
+        <li>Доступ на 1 рік</li>
+      </ul>
+      <div class="co-price">
+        <b>239<small>грн</small></b>
+        <div><s>1200 грн</s><span class="off">−80%</span></div>
+      </div>
+      <p class="co-timer">Ціна діє ще <span id="coTimer">00:00:00</span></p>
+      <p class="co-guarantee"><span>14</span> днів гарантії — поверну кошти без зайвих запитань</p>
+    </aside>
+
+    <div class="co-main">
+      <form class="co-form" id="coForm" novalidate>
+        <h2 id="coTitle">Оформлення <em>доступу</em></h2>
+        <p class="co-sub">Після оплати доступ до уроків прийде в Telegram.</p>
+
+        <label class="co-field">
+          <span>Ім’я</span>
+          <input name="name" autocomplete="given-name" required placeholder="Як до тебе звертатися">
+          <em class="co-err">Вкажи, будь ласка, ім’я</em>
+        </label>
+        <label class="co-field">
+          <span>Email <small>для чеку</small></span>
+          <input name="email" type="email" autocomplete="email" required placeholder="name@gmail.com">
+          <em class="co-err">Перевір email</em>
+        </label>
+        <label class="co-field">
+          <span>Telegram <small>нік або телефон</small></span>
+          <input name="telegram" autocomplete="tel" required placeholder="@username або +380…">
+          <em class="co-err">Потрібен, щоб надіслати доступ</em>
+        </label>
+
+        <fieldset class="co-methods">
+          <legend>Спосіб оплати</legend>
+          <label><input type="radio" name="method" value="card" checked><span><b>Карткою</b><small>Visa · Mastercard</small></span></label>
+          <label><input type="radio" name="method" value="wallet"><span><b>Apple Pay / Google Pay</b><small>в один дотик</small></span></label>
+        </fieldset>
+
+        <label class="co-agree">
+          <input type="checkbox" name="agree" required>
+          <span>Погоджуюсь з <a href="#" target="_blank">публічною офертою</a> та <a href="#" target="_blank">політикою конфіденційності</a></span>
+        </label>
+        <em class="co-err co-err-agree">Потрібна твоя згода</em>
+
+        <button class="btn co-pay" type="submit"><span class="co-pay-label">Оплатити 239 грн</span> <span class="arrow">→</span></button>
+        <p class="co-secure">🔒 Дані картки вводяться на захищеній сторінці платіжного сервісу</p>
+      </form>
+
+      <div class="co-done" id="coDone" hidden>
+        <img src="assets/lotus.svg" alt="">
+        <h2>Дякую, <em id="coName">мила</em>!</h2>
+        <p id="coDoneText">Зараз відкриється сторінка оплати. Після оплати доступ прийде в Telegram.</p>
+        <p class="co-demo" id="coDemo" hidden>Прототип: платіжний сервіс ще не підключено, тому оплата не відбулася.</p>
+        <button class="btn btn-ghost" type="button" data-co-close>Повернутися на сайт</button>
+      </div>
+    </div>
   </div>
 </div>
 
 <script>
   // ---- Налаштування ----
-  const BUY_URL = '#';                                   // посилання на оплату
   const SALE_DEADLINE = '2026-11-18T00:00:00+02:00';     // кінець акції (Київ)
-
-  document.querySelectorAll('[data-buy]').forEach(a => a.href = BUY_URL);
+  const PAYMENT = {
+    provider: null,          // 'wayforpay' | 'liqpay' | 'monobank' | ... — поки null = демо
+    payUrl: '',              // готове платіжне посилання сервісу (найпростіший варіант для статичного сайту)
+    amount: 239, currency: 'UAH', product: 'Йога для вагітних — онлайн-курс'
+  };
 
   // Reveal on scroll
   const io = new IntersectionObserver(entries => entries.forEach(e => {
@@ -1161,8 +1326,9 @@
 
   // Bonus gift: tap/Enter opens the box (hover does it on desktop)
   const bonus = document.getElementById('bonus');
-  bonus.addEventListener('click', () => bonus.classList.toggle('open'));
-  bonus.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); bonus.classList.toggle('open'); } });
+  function giftToCheckout() { bonus.classList.add('open'); setTimeout(openCheckout, 650); }
+  bonus.addEventListener('click', giftToCheckout);
+  bonus.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); giftToCheckout(); } });
 
   // Video modal
   const modal = document.getElementById('modal');
@@ -1188,6 +1354,81 @@
   modal.addEventListener('click', e => { if (e.target === modal || e.target.closest('[data-close]')) closeVideo(); });
   addEventListener('keydown', e => { if (e.key === 'Escape' && modal.classList.contains('open')) closeVideo(); });
 
+  // Checkout prototype
+  const checkout = document.getElementById('checkout');
+  const coForm = document.getElementById('coForm'), coDone = document.getElementById('coDone');
+  let coReturnFocus = null;
+  function openCheckout() {
+    coReturnFocus = document.activeElement;
+    coForm.hidden = false; coDone.hidden = true;
+    checkout.classList.add('open'); checkout.setAttribute('aria-hidden', 'false');
+    document.body.classList.add('locked');
+    setTimeout(() => coForm.querySelector('input').focus({ preventScroll: true }), 450);
+  }
+  function closeCheckout() {
+    checkout.classList.remove('open'); checkout.setAttribute('aria-hidden', 'true');
+    document.body.classList.remove('locked');
+    bonus.classList.remove('open');
+    if (coReturnFocus) coReturnFocus.focus({ preventScroll: true });
+  }
+  document.querySelectorAll('[data-checkout]').forEach(el => el.addEventListener('click', e => {
+    e.preventDefault();
+    if (modal.classList.contains('open')) closeVideo();
+    openCheckout();
+  }));
+  checkout.addEventListener('click', e => { if (e.target === checkout || e.target.closest('[data-co-close]')) closeCheckout(); });
+  addEventListener('keydown', e => { if (e.key === 'Escape' && checkout.classList.contains('open')) closeCheckout(); });
+
+  const isEmail = v => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+  function validate() {
+    const f = coForm.elements; let ok = true;
+    const check = (el, valid) => { el.closest('.co-field').classList.toggle('bad', !valid); if (!valid && ok) el.focus(); ok = ok && valid; };
+    check(f.name, f.name.value.trim().length > 1);
+    check(f.email, isEmail(f.email.value.trim()));
+    check(f.telegram, f.telegram.value.trim().length > 3);
+    coForm.classList.toggle('bad-agree', !f.agree.checked);
+    return ok && f.agree.checked;
+  }
+  coForm.addEventListener('input', e => {
+    const field = e.target.closest('.co-field'); if (field) field.classList.remove('bad');
+    if (e.target.name === 'agree') coForm.classList.remove('bad-agree');
+  });
+
+  // Точка підключення платіжного сервісу.
+  // Варіант 1 (без сервера): PAYMENT.payUrl = готове посилання на оплату → редірект.
+  // Варіант 2 (WayForPay / LiqPay / monobank API): order → свій бекенд/функція створює рахунок з підписом
+  //   і повертає URL сторінки оплати → редірект туди.
+  async function startPayment(order) {
+    if (PAYMENT.payUrl) { location.href = PAYMENT.payUrl; return { redirected: true }; }
+    console.info('[checkout] demo order', order);
+    await new Promise(r => setTimeout(r, 1200));
+    return { demo: true };
+  }
+
+  coForm.addEventListener('submit', async e => {
+    e.preventDefault();
+    if (!validate()) return;
+    const f = coForm.elements;
+    const order = {
+      product: PAYMENT.product, amount: PAYMENT.amount, currency: PAYMENT.currency,
+      name: f.name.value.trim(), email: f.email.value.trim(), telegram: f.telegram.value.trim(),
+      method: f.method.value, createdAt: new Date().toISOString()
+    };
+    const btn = coForm.querySelector('.co-pay');
+    btn.disabled = true; btn.classList.add('loading');
+    btn.querySelector('.co-pay-label').textContent = 'Переходимо до оплати…';
+    const res = await startPayment(order);
+    btn.disabled = false; btn.classList.remove('loading');
+    btn.querySelector('.co-pay-label').textContent = 'Оплатити 239 грн';
+    if (res.redirected) return;
+    document.getElementById('coName').textContent = order.name;
+    document.getElementById('coDoneText').textContent = res.demo
+      ? 'Твоє замовлення сформовано. Після оплати доступ прийде в Telegram.'
+      : 'Зараз відкриється сторінка оплати. Після оплати доступ прийде в Telegram.';
+    document.getElementById('coDemo').hidden = !res.demo;
+    coForm.hidden = true; coDone.hidden = false;
+  });
+
   // Countdown
   const deadline = new Date(SALE_DEADLINE).getTime();
   const tEls = {}; document.querySelectorAll('[data-t]').forEach(b => tEls[b.dataset.t] = b);
@@ -1198,6 +1439,7 @@
     tEls.h.textContent = pad(Math.floor(left / 36e5) % 24);
     tEls.m.textContent = pad(Math.floor(left / 6e4) % 60);
     tEls.s.textContent = pad(Math.floor(left / 1e3) % 60);
+    document.getElementById('coTimer').textContent = pad(Math.floor(left / 36e5)) + ':' + pad(Math.floor(left / 6e4) % 60) + ':' + pad(Math.floor(left / 1e3) % 60);
     if (left > 0) setTimeout(tick, 1000);
   })();
 
