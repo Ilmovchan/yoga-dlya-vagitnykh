@@ -173,7 +173,11 @@
     transform: translateZ(0);
   }
   .arch video { width: 100%; height: 100%; object-fit: cover; transform: scale(1.04); transition: transform 1.2s cubic-bezier(.2,.8,.2,1); }
-  .arch:hover video { transform: scale(1.1); }
+  .arch:hover video, .arch:hover .teaser-img { transform: scale(1.1); }
+  .arch .teaser-img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scale(1.04); transition: transform 1.2s cubic-bezier(.2,.8,.2,1); }
+  /* Safari draws its own ▶ over a video it refused to autoplay — hide it, the arch has its own button */
+  .arch video::-webkit-media-controls, .arch video::-webkit-media-controls-start-playback-button,
+  .arch video::-webkit-media-controls-overlay-play-button { display: none !important; -webkit-appearance: none; opacity: 0; }
   .arch::after {
     content: ""; position: absolute; inset: 0;
     background: linear-gradient(180deg, rgba(74,41,54,0) 50%, rgba(74,41,54,.55) 100%);
@@ -1218,7 +1222,20 @@
   // Hero teaser: Safari may refuse autoplay (Low Power Mode, per-site setting) — retry, then start on first tap/click
   const teaser = document.getElementById('teaser');
   teaser.muted = true; teaser.defaultMuted = true;
-  function playTeaser() { const p = teaser.play(); if (p) p.catch(() => {}); }
+  let teaserSwapped = false;
+  // Autoplay refused (Safari Low Power Mode etc.) → swap in an animated WebP, which Safari still animates
+  function swapTeaserToImage() {
+    if (teaserSwapped) return; teaserSwapped = true;
+    const img = new Image();
+    img.className = 'teaser-img'; img.alt = ''; img.decoding = 'async';
+    img.onload = () => { teaser.after(img); teaser.style.visibility = 'hidden'; };
+    img.src = 'assets/teaser.webp';
+  }
+  function playTeaser() {
+    if (teaserSwapped) return;
+    const p = teaser.play();
+    if (p) p.catch(err => { if (err && err.name === 'NotAllowedError') swapTeaserToImage(); });
+  }
   playTeaser();
   teaser.addEventListener('canplay', playTeaser, { once: true });
   ['pointerdown', 'keydown', 'touchstart'].forEach(ev => addEventListener(ev, () => { if (teaser.paused) playTeaser(); }, { once: true, passive: true }));
