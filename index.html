@@ -136,7 +136,8 @@
   #trail { position: fixed; inset: 0; width: 100%; height: 100%; z-index: -1; pointer-events: none; }
 
   /* ---------- Hero ---------- */
-  .hero { padding-top: 150px; padding-bottom: 90px; overflow: hidden; }
+  .hero { padding-top: 150px; padding-bottom: 50px; overflow: hidden; }
+  #program { padding-top: clamp(56px, 7vw, 90px); padding-bottom: clamp(50px, 6vw, 80px); }
   .blob-layer { position: absolute; inset: 0; z-index: -2; transition: transform 1.2s cubic-bezier(.2,.8,.2,1); }
   .blob {
     position: absolute; border-radius: 50%; filter: blur(60px); opacity: .7; z-index: -1;
@@ -398,7 +399,7 @@
   .bonus p { color: rgba(251,244,241,.75); font-size: 14px; line-height: 1.55; max-width: 26ch; }
 
   /* ---------- Author ---------- */
-  .author { background: var(--cream-2); }
+  .author { background: var(--cream-2); padding-top: clamp(56px, 7vw, 90px); }
   .author-grid { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(40px, 7vw, 110px); align-items: center; }
   .portrait { position: relative; isolation: isolate; }
   .portrait img { width: 100%; aspect-ratio: 1 / 1; object-fit: cover; border-radius: 36px; box-shadow: var(--shadow); }
@@ -456,7 +457,8 @@
   }
 
   /* ---------- Price ---------- */
-  .price { padding-top: 40px; }
+  .price { padding-top: 40px; padding-bottom: clamp(40px, 5vw, 70px); }
+  #faq { padding-top: clamp(40px, 5vw, 70px); padding-bottom: clamp(40px, 5vw, 70px); }
   .price-card {
     position: relative; max-width: 920px; margin: 0 auto; text-align: center;
     padding: clamp(50px, 7vw, 90px) clamp(24px, 6vw, 80px);
@@ -510,7 +512,7 @@
   details p { padding: 0 60px 28px 0; color: var(--plum-soft); }
 
   /* ---------- Footer ---------- */
-  footer { padding: 70px 0 120px; border-top: 1px solid var(--line); font-size: 14px; color: var(--muted); }
+  footer { padding: 50px 0 120px; font-size: 14px; color: var(--muted); }
   .foot-top { display: flex; justify-content: space-between; align-items: center; gap: 30px; flex-wrap: wrap; margin-bottom: 40px; }
   .foot-cols { display: flex; gap: 50px; flex-wrap: wrap; }
   .foot-cols a { text-decoration: none; display: block; color: var(--plum); }
@@ -659,7 +661,25 @@
     .header .btn { padding: 10px 14px; font-size: 11px; }
     .header .btn .arrow { display: none; }
     .hero { padding-top: 120px; }
-    .hero-cta { flex-direction: column; align-items: flex-start; gap: 22px; }
+    .hero-cta { flex-direction: column; align-items: center; gap: 22px; }
+    .hero-cta .btn { padding: 22px 36px; font-size: 16px; }
+    .price-mini b { font-size: 56px; }
+    .header { background: rgba(251, 244, 241, .9); }
+    section { padding: 56px 0; }
+    .section-head { gap: 14px; margin-bottom: 32px; }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+    .stats b { font-size: 44px; }
+    .stats span { display: block; font-size: 13px; line-height: 1.3; margin-top: 4px; }
+    .feel-top { margin-bottom: 40px; }
+    .feel-core { margin-top: 40px; padding-top: 32px; }
+    .how-grid { row-gap: 26px; }
+    .step { padding-top: 0; }
+    .step::before { width: 48px; height: 48px; font-size: 22px; margin-bottom: 14px; }
+    .pause-card .btn { min-width: 250px; justify-content: center; }
+    .foot-top { margin-bottom: 22px; }
+    .foot-cols { gap: 16px; }
+    .faq-grid { gap: 20px; }
+    footer { padding-top: 40px; }
     .play-badge { left: -14px; }
     .hero-lotus { width: 80px; right: -6px; }
     .bubbles { min-height: 0; display: grid; gap: 14px; }
@@ -1373,7 +1393,7 @@
 
   // Bonus gift: tap/Enter opens the box (hover does it on desktop)
   const bonus = document.getElementById('bonus');
-  function giftToCheckout() { bonus.classList.add('open'); setTimeout(openCheckout, 650); }
+  function giftToCheckout() { bonus.classList.add('open'); openCheckout(); }
   bonus.addEventListener('click', giftToCheckout);
   bonus.addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); giftToCheckout(); } });
 
