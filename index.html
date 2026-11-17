@@ -420,7 +420,8 @@
   .step p { font-size: 15px; color: var(--plum-soft); }
 
   /* ---------- Results ---------- */
-  .results { padding-top: 0; }
+  .results { padding-top: 0; padding-bottom: clamp(36px, 5vw, 64px); }
+  .results + .honest { padding-top: clamp(36px, 5vw, 64px); }
   .results-box {
     border-radius: clamp(32px, 5vw, 60px); padding: clamp(40px, 6vw, 80px);
     background: radial-gradient(circle at 90% 10%, #fde4d6, transparent 50%), radial-gradient(circle at 0% 100%, #f2d2dc, transparent 55%), var(--white);
