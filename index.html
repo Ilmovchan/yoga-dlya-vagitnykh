@@ -753,7 +753,7 @@
         <div class="arch-outline"></div>
         <img class="hero-lotus" src="assets/lotus.svg" alt="">
         <div class="arch" data-open-video role="button" tabindex="0" aria-label="Дивитися відео-привітання від Анни">
-          <video src="assets/video-teaser.mp4" poster="assets/teaser-poster.jpg" autoplay muted loop playsinline></video>
+          <video id="teaser" src="assets/video-teaser.mp4" poster="assets/teaser-poster.jpg" autoplay muted loop playsinline preload="auto" disablepictureinpicture></video>
           <div class="arch-caption">
             <div>
               <strong>Привіт, я Анна</strong>
@@ -1198,6 +1198,31 @@
     payUrl: '',              // готове платіжне посилання сервісу (найпростіший варіант для статичного сайту)
     amount: 239, currency: 'UAH', product: 'Йога для вагітних — онлайн-курс'
   };
+
+  // Always open at the top on reload: drop #section from the URL, no scroll restoration
+  if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
+  if (location.hash) history.replaceState(null, '', location.pathname + location.search);
+  scrollTo(0, 0);
+  // In-page links scroll smoothly without writing #hash into the address bar
+  document.addEventListener('click', e => {
+    const a = e.target.closest('a[href^="#"]');
+    if (!a || a.hasAttribute('data-checkout')) return;
+    const id = a.getAttribute('href').slice(1);
+    const target = id === 'top' ? document.body : document.getElementById(id);
+    if (!target) return;
+    e.preventDefault();
+    if (id === 'top') scrollTo({ top: 0, behavior: 'smooth' });
+    else target.scrollIntoView({ behavior: 'smooth' });
+  });
+
+  // Hero teaser: Safari may refuse autoplay (Low Power Mode, per-site setting) — retry, then start on first tap/click
+  const teaser = document.getElementById('teaser');
+  teaser.muted = true; teaser.defaultMuted = true;
+  function playTeaser() { const p = teaser.play(); if (p) p.catch(() => {}); }
+  playTeaser();
+  teaser.addEventListener('canplay', playTeaser, { once: true });
+  ['pointerdown', 'keydown', 'touchstart'].forEach(ev => addEventListener(ev, () => { if (teaser.paused) playTeaser(); }, { once: true, passive: true }));
+  document.addEventListener('visibilitychange', () => { if (!document.hidden && teaser.paused) playTeaser(); });
 
   // Reveal on scroll
   const io = new IntersectionObserver(entries => entries.forEach(e => {
