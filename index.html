@@ -113,7 +113,7 @@
     position: fixed; top: 16px; left: 50%; transform: translateX(-50%); z-index: 50;
     width: min(1180px, 100% - 24px);
     display: flex; align-items: center; justify-content: space-between; gap: 20px;
-    padding: 10px 10px 10px 18px; border-radius: 999px;
+    padding: 10px 32px 10px 18px; border-radius: 999px;
     background: rgba(251, 244, 241, .72); backdrop-filter: blur(18px) saturate(1.4); -webkit-backdrop-filter: blur(18px) saturate(1.4);
     box-shadow: 0 1px 0 rgba(255,255,255,.7) inset, 0 10px 30px -20px rgba(74, 41, 54, .4);
   }
@@ -123,7 +123,6 @@
   .nav { display: flex; gap: 28px; font-size: 14px; }
   .nav a { text-decoration: none; color: var(--plum-soft); transition: color .2s; }
   .nav a:hover { color: var(--rose-deep); }
-  .header .btn { padding: 12px 20px; font-size: 12px; }
 
   /* ---------- Cursor: soft glow + petal trail ---------- */
   .cursor-glow {
@@ -137,7 +136,7 @@
 
   /* ---------- Hero ---------- */
   .hero { padding-top: 150px; padding-bottom: 50px; overflow: hidden; }
-  #program { padding-top: clamp(56px, 7vw, 90px); padding-bottom: clamp(50px, 6vw, 80px); }
+  #program { padding-top: clamp(56px, 7vw, 90px); padding-bottom: clamp(30px, 4vw, 50px); }
   .blob-layer { position: absolute; inset: 0; z-index: -2; transition: transform 1.2s cubic-bezier(.2,.8,.2,1); }
   .blob {
     position: absolute; border-radius: 50%; filter: blur(60px); opacity: .7; z-index: -1;
@@ -217,6 +216,7 @@
   @keyframes scroll { to { transform: translateX(-50%); } }
 
   /* ---------- Honest ---------- */
+  .honest { padding-top: clamp(56px, 7vw, 90px); }
   .honest-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(30px, 6vw, 90px); align-items: center; }
   .bubbles { position: relative; min-height: 440px; }
   .bubble {
@@ -240,7 +240,7 @@
   }
 
   /* ---------- Pause: breathing + affirmations ---------- */
-  .pause { padding-top: 0; }
+  .pause { padding-top: clamp(56px, 7vw, 90px); padding-bottom: clamp(30px, 4vw, 50px); }
   .pause .section-head { justify-content: center; text-align: center; flex-direction: column; align-items: center; gap: 0; }
   .pause .section-head .eyebrow::after { content: ""; width: 28px; height: 1px; background: currentColor; }
   .pause-grid { display: grid; grid-template-columns: 1.15fr .85fr; gap: 20px; }
@@ -303,18 +303,8 @@
   .feel-top { display: grid; grid-template-columns: 1.1fr .9fr; gap: 50px; align-items: end; margin-bottom: 70px; }
   .feel-top p { color: rgba(251,244,241,.75); }
   .feel-top p + p { margin-top: 14px; }
-  .feel-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
-  .feel-card {
-    position: relative; padding: 34px 26px 30px; border-radius: 160px 160px 24px 24px;
-    background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.1);
-    min-height: 280px; display: flex; flex-direction: column; justify-content: flex-end;
-    transition: background .4s, transform .5s cubic-bezier(.2,.8,.2,1);
-  }
-  .feel-card:hover { background: rgba(233,165,176,.16); transform: translateY(-8px); }
-  .feel-card .ic { position: absolute; top: 44px; left: 50%; transform: translateX(-50%); width: 64px; height: 64px; color: var(--rose); }
-  .feel-card h3 { font-size: 26px; font-style: italic; line-height: 1.15; }
   .feel-core {
-    margin-top: 70px; display: grid; grid-template-columns: auto 1fr; gap: 40px; align-items: center;
+    display: grid; grid-template-columns: auto 1fr; gap: 40px; align-items: center;
     padding-top: 50px; border-top: 1px solid rgba(255,255,255,.12);
   }
   .feel-core h3 { font-size: clamp(34px, 4vw, 52px); font-style: italic; color: var(--rose); max-width: 11ch; }
@@ -439,9 +429,9 @@
   .step p { font-size: 15px; color: var(--plum-soft); }
 
   /* ---------- Results ---------- */
-  .results { padding-top: clamp(50px, 6vw, 80px); padding-bottom: clamp(50px, 6vw, 80px); }
-  #how { padding-bottom: clamp(36px, 5vw, 64px); }
-  #how + .honest { padding-top: clamp(36px, 5vw, 64px); }
+  .results { padding-top: clamp(30px, 4vw, 50px); padding-bottom: clamp(50px, 6vw, 80px); }
+  #how { padding-top: clamp(30px, 4vw, 50px); padding-bottom: clamp(30px, 4vw, 50px); }
+  #how + .reviews { padding-top: clamp(30px, 4vw, 50px); }
   .results-box {
     border-radius: clamp(32px, 5vw, 60px); padding: clamp(40px, 6vw, 80px);
     background: radial-gradient(circle at 90% 10%, #fde4d6, transparent 50%), radial-gradient(circle at 0% 100%, #f2d2dc, transparent 55%), var(--white);
@@ -460,36 +450,47 @@
   }
 
   /* ---------- Price ---------- */
-  .price { padding-top: 40px; padding-bottom: clamp(40px, 5vw, 70px); }
-  #faq { padding-top: clamp(40px, 5vw, 70px); padding-bottom: clamp(40px, 5vw, 70px); }
+  .reviews { padding-top: clamp(30px, 4vw, 50px); padding-bottom: clamp(30px, 4vw, 50px); }
+  .reviews-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .review {
+    display: flex; flex-direction: column; justify-content: space-between; gap: 28px;
+    padding: 34px 30px 30px; border-radius: var(--radius);
+    background: var(--white); box-shadow: inset 0 0 0 1px var(--line);
+  }
+  .review blockquote { font-family: var(--serif); font-size: 24px; font-style: italic; line-height: 1.3; }
+  .review blockquote::before { content: "“"; display: block; font-size: 64px; line-height: .6; color: var(--rose); margin-bottom: 10px; }
+  .review figcaption b { display: block; font-weight: 600; }
+  .review figcaption span { font-size: 14px; color: var(--muted); }
+  .price { padding-top: 40px; padding-bottom: clamp(30px, 4vw, 50px); }
+  #faq { padding-top: clamp(30px, 4vw, 50px); padding-bottom: clamp(40px, 5vw, 70px); }
   .price-card {
     position: relative; max-width: 920px; margin: 0 auto; text-align: center;
-    padding: clamp(50px, 7vw, 90px) clamp(24px, 6vw, 80px);
-    border-radius: 300px 300px 40px 40px; background: var(--plum); color: var(--cream); overflow: hidden;
+    padding: clamp(40px, 5vw, 60px) clamp(24px, 6vw, 80px) clamp(36px, 4vw, 50px);
+    border-radius: 220px 220px 40px 40px; background: var(--plum); color: var(--cream); overflow: hidden;
   }
   .price-card .glow { position: absolute; inset: auto -20% -40% -20%; height: 70%; background: radial-gradient(ellipse at center, rgba(236,138,114,.45), transparent 60%); pointer-events: none; }
-  .price-card img.lotus-top { width: 120px; margin: 0 auto 20px; }
-  .price-card h2 { font-size: clamp(36px, 4.6vw, 58px); margin: 10px auto 16px; max-width: 18ch; }
+  .price-card img.lotus-top { width: 84px; margin: 0 auto 10px; }
+  .price-card h2 { font-size: clamp(34px, 4vw, 50px); margin: 6px auto 0; max-width: 18ch; }
   .price-card h2 em { color: var(--rose); }
   .price-card .eyebrow { color: var(--rose); justify-content: center; }
   .price-card .eyebrow::before { display: none; }
-  .includes { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin: 26px 0 36px; }
-  .includes span { padding: 8px 16px; border-radius: 999px; border: 1px solid rgba(255,255,255,.18); font-size: 14px; color: rgba(251,244,241,.85); }
+  .includes { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px; margin: 18px 0 22px; }
+  .includes span { padding: 6px 14px; border-radius: 999px; border: 1px solid rgba(255,255,255,.18); font-size: 14px; color: rgba(251,244,241,.85); }
   .big-price { display: flex; align-items: center; justify-content: center; gap: 22px; flex-wrap: wrap; }
-  .big-price b { font-family: var(--serif); font-size: clamp(90px, 13vw, 150px); font-weight: 500; line-height: .85; }
+  .big-price b { font-family: var(--serif); font-size: clamp(76px, 10vw, 112px); font-weight: 500; line-height: .85; }
   .big-price b small { font-size: .3em; font-style: italic; margin-left: 6px; }
   .big-price .old { text-align: left; }
-  .big-price s { display: block; font-size: 24px; color: rgba(251,244,241,.5); }
+  .big-price s { display: block; font-size: 22px; color: rgba(251,244,241,.5); }
   .big-price .off { display: inline-block; margin-top: 6px; padding: 6px 12px; border-radius: 999px; background: var(--coral); color: #fff; font-size: 13px; font-weight: 700; letter-spacing: .06em; }
-  .timer { display: flex; justify-content: center; gap: 12px; margin: 40px 0 36px; }
-  .timer-label { font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: rgba(251,244,241,.6); margin-top: 34px; }
-  .timer div { min-width: 86px; padding: 14px 10px; border-radius: 18px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1); }
-  .timer b { display: block; font-family: var(--serif); font-size: 44px; font-weight: 500; line-height: 1; font-variant-numeric: tabular-nums; }
+  .timer { display: flex; justify-content: center; gap: 10px; margin: 10px 0 22px; }
+  .timer-label { font-size: 13px; letter-spacing: .14em; text-transform: uppercase; color: rgba(251,244,241,.6); margin-top: 22px; }
+  .timer div { min-width: 76px; padding: 10px 8px; border-radius: 18px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.1); }
+  .timer b { display: block; font-family: var(--serif); font-size: 36px; font-weight: 500; line-height: 1; font-variant-numeric: tabular-nums; }
   .timer span { font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: rgba(251,244,241,.6); }
-  .price-card .btn { background: var(--cream); color: var(--plum); font-size: 16px; padding: 22px 34px; }
+  .price-card .btn { background: var(--cream); color: var(--plum); font-size: 16px; padding: 18px 30px; }
   .price-card .btn .arrow { background: var(--plum); color: var(--cream); }
   .price-card .btn:hover { color: #fff; }
-  .ps { margin-top: 26px; font-size: 14px; color: rgba(251,244,241,.65); }
+  .ps { margin-top: 16px; font-size: 14px; color: rgba(251,244,241,.65); }
 
   .guarantee {
     max-width: 920px; margin: 26px auto 0; display: grid; grid-template-columns: auto 1fr; gap: 28px; align-items: center;
@@ -629,6 +630,21 @@
   }
 
   /* sticky mobile cta */
+  .cart-fab {
+    position: fixed; right: 32px; bottom: 24px; z-index: 60; width: 80px; height: 80px; border-radius: 50%;
+    display: grid; place-items: center; background: var(--plum); color: var(--cream);
+    box-shadow: 0 20px 40px -12px rgba(74, 41, 54, .55);
+    transition: transform .3s cubic-bezier(.2,.8,.2,1), box-shadow .3s, background-color .3s, color .3s;
+  }
+  .cart-fab:hover { transform: translateY(-3px) scale(1.05); box-shadow: 0 24px 44px -12px rgba(74, 41, 54, .65); }
+  .cart-fab svg { width: 36px; height: 36px; }
+  .cart-fab.on-dark { background: var(--cream); color: var(--plum); box-shadow: 0 20px 40px -12px rgba(0, 0, 0, .45); }
+  .cart-fab:focus:not(:focus-visible) { outline: none; }
+  .cart-fab:focus-visible { outline: 2px solid var(--rose); outline-offset: 4px; }
+  .cart-fab .count {
+    position: absolute; top: 2px; right: 2px; min-width: 24px; height: 24px; padding: 0 7px; border-radius: 999px;
+    display: grid; place-items: center; background: var(--coral); color: #fff; font-size: 12px; font-weight: 700; line-height: 1;
+  }
   .sticky-cta {
     position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 60; display: none;
     align-items: center; justify-content: space-between; gap: 12px;
@@ -644,8 +660,8 @@
   /* ---------- Responsive ---------- */
   @media (max-width: 1000px) {
     .nav { display: none; }
+    .header { justify-content: center; }
     .pause-grid, .hero-grid, .honest-grid, .feel-top, .author-grid, .results-box, .faq-grid { grid-template-columns: 1fr; }
-    .feel-cards { grid-template-columns: repeat(2, 1fr); }
     .program-list { grid-template-columns: repeat(2, 1fr); }
     .combo { grid-template-columns: 1fr; gap: 14px; }
     .combo-plus { justify-self: center; }
@@ -659,10 +675,9 @@
   @media (max-width: 640px) {
     body { font-size: 16px; }
     .wrap { width: calc(100% - 32px); }
-    .header { padding: 8px 8px 8px 14px; }
+    .header { padding: 8px 14px; }
     .brand span { font-size: 19px; }
-    .header .btn { padding: 10px 14px; font-size: 11px; }
-    .header .btn .arrow { display: none; }
+    .cart-fab { display: none; }
     .hero { padding-top: 120px; }
     .hero-cta { flex-direction: column; align-items: center; gap: 22px; }
     .hero-cta .btn { padding: 22px 36px; font-size: 16px; }
@@ -674,7 +689,7 @@
     .stats b { font-size: 44px; }
     .stats span { display: block; font-size: 13px; line-height: 1.3; margin-top: 4px; }
     .feel-top { margin-bottom: 40px; }
-    .feel-core { margin-top: 40px; padding-top: 32px; }
+    .feel-core { padding-top: 32px; }
     .how-grid { row-gap: 26px; }
     .step { padding-top: 0; }
     .step::before { width: 48px; height: 48px; font-size: 22px; margin-bottom: 14px; }
@@ -683,8 +698,10 @@
     .foot-cols { gap: 16px; }
     .faq-grid { gap: 20px; }
     .results { padding-top: 32px; padding-bottom: 32px; }
+    .honest { padding-top: 40px; }
+    .reviews, .pause { padding-top: 40px; padding-bottom: 32px; }
     #how { padding-bottom: 20px; }
-    #how + .honest { padding-top: 24px; }
+    #how + .reviews { padding-top: 24px; }
     .results-box { padding: 30px 22px; gap: 18px; }
     .results li { padding: 16px 0; }
     .feel { padding-bottom: 40px; }
@@ -699,8 +716,7 @@
     .bubbles { min-height: 0; display: grid; gap: 14px; }
     .bubble { position: static; animation: none; }
     .bubble:nth-child(even) { justify-self: end; }
-    .feel-cards, .program-list, .how-grid { grid-template-columns: 1fr; }
-    .feel-card { min-height: 220px; }
+    .program-list, .how-grid, .reviews-grid { grid-template-columns: 1fr; }
     .step::after { display: none; }
     .lesson-video { padding: 14px 8px; }
     .lv-frame { border-radius: 22px; }
@@ -712,22 +728,21 @@
     .breath-stage { width: 260px; height: 260px; }
     .portrait .badge { right: 10px; top: 12px; max-width: 172px; padding: 12px 16px; }
     .portrait .badge b { font-size: 17px; }
-    .price-card { border-radius: 180px 180px 32px 32px; }
+    .price-card { border-radius: 150px 150px 32px 32px; }
     .timer div { min-width: 70px; }
-    .timer b { font-size: 34px; }
+    .timer b { font-size: 30px; }
     .guarantee { grid-template-columns: 1fr; text-align: center; justify-items: center; }
     details p { padding-right: 0; }
     .sticky-cta { display: flex; }
     .marquee-track { animation-duration: 24s; gap: 32px; }
     .marquee span { font-size: 30px; gap: 32px; font-weight: 600; }
     .brand span { font-weight: 600; }
-    h2 em, h1 em, .hero h1 .small, .bubble, .quote, .feel-card h3, .feel-core h3, .bonus h3,
+    h2 em, h1 em, .hero h1 .small, .bubble, .quote, .feel-core h3, .bonus h3,
     .author .intro-line, .portrait .badge b, .pause-card h3, .orb-label, .face.front p,
     .arch-caption strong, .step::before, .lesson .num { font-weight: 600; }
     .hero h1 .small { font-size: .5em; }
     .bubble { font-size: 26px; }
     .quote { font-size: 24px; }
-    .feel-card h3 { font-size: 28px; }
     .lesson h3, .step h3, .guarantee h3 { font-size: 30px; font-weight: 600; }
     .results li, summary { font-size: 24px; font-weight: 600; }
     .author .intro-line { font-size: 26px; }
@@ -758,12 +773,11 @@
     <span>Екзотичний спокій</span>
   </a>
   <nav class="nav">
-    <a href="#program">Що всередині</a>
     <a href="#author">Про мене</a>
     <a href="#for-you">Для тебе</a>
+    <a href="#program">Що всередині</a>
     <a href="#faq">Є запитання?</a>
   </nav>
-  <a class="btn" href="#price" data-checkout>Приєднатися <span class="arrow">→</span></a>
 </header>
 
 <main id="top">
@@ -786,7 +800,7 @@
         <div class="hero-cta reveal d3">
           <a class="btn" href="#price" data-checkout>Отримати курс <span class="arrow">→</span></a>
           <div class="price-mini">
-            <div><small>Спеціальна ціна</small><b>239 ₴</b></div>
+            <div><small>Спеціальна ціна</small><b>449 ₴</b></div>
             <s>1200 ₴</s>
           </div>
         </div>
@@ -823,6 +837,155 @@
       <span>дихання</span><span>спокій</span><span>довіра до тіла</span><span>м’який рух</span><span>внутрішня опора</span><span>турбота про себе</span>
     </div>
   </div>
+
+  <!-- HONEST -->
+  <section class="honest" id="about">
+    <div class="wrap honest-grid">
+      <div class="bubbles">
+        <div class="bubble reveal"><small>думки о 3 ночі</small>Чи впораюся я?</div>
+        <div class="bubble reveal d1"><small>тіло</small>Важкість у попереку…</div>
+        <div class="bubble reveal d2"><small>страх</small>Чи буде боляче?</div>
+        <div class="bubble reveal d3"><small>запитання</small>Чи можна уникнути розривів?</div>
+      </div>
+      <div>
+        <span class="eyebrow reveal">Скажи чесно</span>
+        <h2 class="reveal d1">Тіло змінюється. <em>І запитань стає більше</em></h2>
+        <p class="lead reveal d2">Важкість у попереку, напруга в тазу. А ще думки про пологи.</p>
+        <p class="reveal d2" style="margin-top:18px;color:var(--plum-soft)">Я точно знаю, як це — відчувати страх перед невідомим, боятися болю та сумніватися у власних силах. Мій авторський курс йоги для вагітних — це ваш простір турботи, що допомагає жінкам <b>самостійно</b>, м’яко та безпечно підготувати м’язи таза до пологів.</p>
+        <div class="quote reveal d3">Пологи починаються задовго до першої перейми.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AUTHOR -->
+  <section class="author" id="author">
+    <div class="wrap author-grid">
+      <div class="portrait reveal">
+        <img class="lotus-sm" src="assets/lotus.svg" alt="">
+        <img src="assets/author.jpg" alt="Анна Василіогло" loading="lazy">
+        <div class="badge"><b>«Слухати тіло, а не вимагати від нього гарантій»</b></div>
+      </div>
+      <div>
+        <span class="eyebrow reveal">Про мене</span>
+        <h2 class="reveal d1">Привіт, я <em>Анна Василіогло</em></h2>
+        <p class="intro-line reveal d1">Майже у 40 років я вперше стала мамою.</p>
+        <div class="roles reveal d2">
+          <span>режисерка</span><span>візіонерка</span><span>співзасновниця арт-галереї</span><span>дослідниця</span><span>практикуюча йогиня</span><span>мама Адама</span>
+        </div>
+        <p class="reveal d2">Йога супроводжує мене понад 11 років, зокрема 8 років практики в Індонезії.</p>
+        <p class="reveal d3">Я хочу поділитися з тобою своїми знаннями та досвідом у досягненні внутрішньої гармонії — глибше довіряти своєму тілу. Не вимагати від нього гарантій, а слухати його.</p>
+        <div class="stats reveal d3">
+          <div><b>11+</b><span>років з йогою</span></div>
+          <div><b>8</b><span>років практики в Індонезії</span></div>
+          <div><b>1</b><span>щасливий Адам</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PAUSE -->
+  <section class="pause" id="pause">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow reveal">Пауза для тебе</span>
+        <h2 class="reveal d1">Спробуй <em>прямо зараз</em></h2>
+        <p class="lead reveal d2">Хвилина повільного дихання — і тіло вже трохи м’якше.</p>
+      </div>
+      <div class="pause-grid">
+        <div class="pause-card reveal" id="breath">
+          <h3>Дихай зі мною</h3>
+          <p class="hint">Вдих через ніс — довгий, спокійний видих. Без напруги.</p>
+          <div class="breath-stage">
+            <div class="ring"></div><div class="ring r2"></div>
+            <div class="orb" id="orb"></div>
+            <div class="orb-label" id="orbLabel">Готова?</div>
+          </div>
+          <div class="breath-dots" id="breathDots"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <button class="btn" id="breathBtn" type="button">Почати <span class="arrow">◦</span></button>
+        </div>
+        <div class="pause-card aff-card reveal d1">
+          <h3>Афірмація на сьогодні</h3>
+          <p class="hint">Торкнись картки — і візьми з собою слова підтримки.</p>
+          <div class="deck" id="deck" role="button" tabindex="0" aria-label="Витягнути картку з афірмацією">
+            <div class="flip">
+              <div class="face back"><img src="assets/lotus.svg" alt=""><span>Витягни картку</span></div>
+              <div class="face front"><p id="affText"></p><span class="n" id="affNum"></span></div>
+            </div>
+          </div>
+          <button class="btn btn-ghost" id="affBtn" type="button">Інша картка <span class="arrow">↻</span></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <!-- Справжні відгуки з попереднього сайту -->
+  <section class="reviews" id="reviews">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <span class="eyebrow reveal">Відгуки</span>
+          <h2 class="reveal d1">Що кажуть <em>учениці</em></h2>
+        </div>
+      </div>
+      <div class="reviews-grid">
+        <figure class="review reveal">
+          <blockquote>Під час вагітності моє тіло стало ніби зовсім незнайомим. Через ці практики я почала краще розуміти, де напружуюся, як дихаю, коли варто сповільнитися. Для мене це стало не просто йогою, а способом повернути контакт із собою.</blockquote>
+          <figcaption><b>Жушма Катерина</b><span>учасниця курсу</span></figcaption>
+        </figure>
+        <figure class="review reveal d1">
+          <blockquote>Особливо відгукнулася історія Анни. Коли людина створює продукт, який сама проходила, практикувала і пройшла через страх і невизначеність вагітності, це відчувається зовсім інакше.</blockquote>
+          <figcaption><b>Олена Сабліна</b><span>учасниця курсу</span></figcaption>
+        </figure>
+        <figure class="review reveal d2">
+          <blockquote>Я купила курс більше через тривожність, ніж через йогу. Хотілося хоч якось заспокоїти голову перед пологами. Казка на ніч озвучена Анною дуже заспокоює та підтримує. Дякую</blockquote>
+          <figcaption><b>Вікторія</b><span>учасниця курсу</span></figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- RESULTS -->
+  <section class="results">
+    <div class="wrap">
+      <div class="results-box">
+        <div>
+          <span class="eyebrow reveal">Результат</span>
+          <h2 class="reveal d1">Що ти отримаєш, <em>пройшовши курс</em></h2>
+          <p class="lead reveal d2">Уроки розроблені так, щоб ти могла зосередитися на своєму тілі.</p>
+        </div>
+        <ul>
+          <li class="reveal"><i>✓</i>Менше напруги та дискомфорту в тілі</li>
+          <li class="reveal d1"><i>✓</i>Краща рухливість таза й підготовка до пологів</li>
+          <li class="reveal d2"><i>✓</i>Менше тривоги, більше впевненості в собі</li>
+          <li class="reveal d2"><i>✓</i>Дихальні техніки для спокою та розслаблення</li>
+          <li class="reveal d3"><i>✓</i>Глибший контакт із тілом і малюком</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- FEEL -->
+  <section class="feel" id="for-you">
+    <div class="glow"></div>
+    <div class="wrap">
+      <div class="feel-top">
+        <div>
+          <span class="eyebrow reveal">Твої відчуття</span>
+          <h2 class="reveal d1">Не без страху, але <em>з опорою</em>. Не контролювати все — а бути поруч із собою</h2>
+        </div>
+        <div class="reveal d2">
+          <p>Саме тому я створила курс йоги для вагітних. Не щоб пообіцяти комусь такі самі пологи, як у мене.</p>
+          <p>А щоб дати вам простір, де ви можете м’яко рухатися, працювати з напругою, приділяти увагу тілу й потроху знаходити власну внутрішню опору.</p>
+        </div>
+      </div>
+
+      <div class="feel-core reveal">
+        <h3>Твій внутрішній стрижень</h3>
+        <p>Твоя сила в тому, щоб мати на що спертися, навіть коли страшно. Йога — це більше, ніж вправи. Це можливість навчитися чути себе, працювати з напругою та залишатися в контакті зі своїм тілом. Ці навички можуть підтримати тебе під час вагітності та пологів.</p>
+      </div>
+    </div>
+  </section>
 
   <!-- PROGRAM -->
   <section id="program">
@@ -898,94 +1061,6 @@
     </div>
   </section>
 
-  <!-- AUTHOR -->
-  <section class="author" id="author">
-    <div class="wrap author-grid">
-      <div class="portrait reveal">
-        <img class="lotus-sm" src="assets/lotus.svg" alt="">
-        <img src="assets/author.jpg" alt="Анна Василіогло" loading="lazy">
-        <div class="badge"><b>«Слухати тіло, а не вимагати від нього гарантій»</b></div>
-      </div>
-      <div>
-        <span class="eyebrow reveal">Про мене</span>
-        <h2 class="reveal d1">Привіт, я <em>Анна Василіогло</em></h2>
-        <p class="intro-line reveal d1">Майже у 40 років я вперше стала мамою.</p>
-        <div class="roles reveal d2">
-          <span>режисерка</span><span>візіонерка</span><span>співзасновниця арт-галереї</span><span>дослідниця</span><span>практикуюча йогиня</span><span>мама Адама</span>
-        </div>
-        <p class="reveal d2">Йога супроводжує мене понад 11 років, зокрема 8 років практики в Індонезії.</p>
-        <p class="reveal d3">Я хочу поділитися з тобою своїми знаннями та досвідом у досягненні внутрішньої гармонії — глибше довіряти своєму тілу. Не вимагати від нього гарантій, а слухати його.</p>
-        <div class="stats reveal d3">
-          <div><b>11+</b><span>років з йогою</span></div>
-          <div><b>8</b><span>років практики в Індонезії</span></div>
-          <div><b>1</b><span>щасливий Адам</span></div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- RESULTS -->
-  <section class="results">
-    <div class="wrap">
-      <div class="results-box">
-        <div>
-          <span class="eyebrow reveal">Результат</span>
-          <h2 class="reveal d1">Що ти отримаєш, <em>пройшовши курс</em></h2>
-          <p class="lead reveal d2">Уроки розроблені так, щоб ти могла зосередитися на своєму тілі.</p>
-        </div>
-        <ul>
-          <li class="reveal"><i>✓</i>Менше напруги та дискомфорту в тілі</li>
-          <li class="reveal d1"><i>✓</i>Краща рухливість таза й підготовка до пологів</li>
-          <li class="reveal d2"><i>✓</i>Менше тривоги, більше впевненості в собі</li>
-          <li class="reveal d2"><i>✓</i>Дихальні техніки для спокою та розслаблення</li>
-          <li class="reveal d3"><i>✓</i>Глибший контакт із тілом і малюком</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- FEEL -->
-  <section class="feel" id="for-you">
-    <div class="glow"></div>
-    <div class="wrap">
-      <div class="feel-top">
-        <div>
-          <span class="eyebrow reveal">Твої відчуття</span>
-          <h2 class="reveal d1">Не без страху, але <em>з опорою</em>. Не контролювати все — а бути поруч із собою</h2>
-        </div>
-        <div class="reveal d2">
-          <p>Саме тому я створила курс йоги для вагітних. Не щоб пообіцяти комусь такі самі пологи, як у мене.</p>
-          <p>А щоб дати вам простір, де ви можете м’яко рухатися, працювати з напругою, приділяти увагу тілу й потроху знаходити власну внутрішню опору.</p>
-        </div>
-      </div>
-
-      <span class="eyebrow reveal" style="margin-bottom:26px">Твоя підготовка</span>
-      <div class="feel-cards">
-        <div class="feel-card reveal">
-          <svg class="ic" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M8 26c8-6 16 6 24 0s16-6 24 0"/><path d="M8 36c8-6 16 6 24 0s16-6 24 0"/><path d="M14 46c6-4 12 4 18 0s12-4 18 0"/></svg>
-          <h3>Знаходь спокій через дихальні практики</h3>
-        </div>
-        <div class="feel-card reveal d1">
-          <svg class="ic" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><circle cx="32" cy="32" r="22"/><circle cx="32" cy="32" r="12"/><circle cx="32" cy="32" r="3" fill="currentColor"/></svg>
-          <h3>Вчися відчувати напругу та розслаблення</h3>
-        </div>
-        <div class="feel-card reveal d2">
-          <svg class="ic" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M32 8c0 14-12 18-12 30a12 12 0 0 0 24 0C44 26 32 22 32 8z"/><path d="M32 30v20"/></svg>
-          <h3>Дбайливо підтримуй рухливість тіла</h3>
-        </div>
-        <div class="feel-card reveal d3">
-          <svg class="ic" viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"><path d="M32 54S10 40 10 24a11 11 0 0 1 22-3 11 11 0 0 1 22 3c0 16-22 30-22 30z"/></svg>
-          <h3>Розвивай довіру до свого тіла</h3>
-        </div>
-      </div>
-
-      <div class="feel-core reveal">
-        <h3>Твій внутрішній стрижень</h3>
-        <p>Твоя сила в тому, щоб мати на що спертися, навіть коли страшно. Йога — це більше, ніж вправи. Це можливість навчитися чути себе, працювати з напругою та залишатися в контакті зі своїм тілом. Ці навички можуть підтримати тебе під час вагітності та пологів.</p>
-      </div>
-    </div>
-  </section>
-
   <!-- HOW -->
   <section id="how">
     <div class="wrap">
@@ -1004,56 +1079,29 @@
     </div>
   </section>
 
-  <!-- HONEST -->
-  <section class="honest" id="about">
-    <div class="wrap honest-grid">
-      <div class="bubbles">
-        <div class="bubble reveal"><small>думки о 3 ночі</small>Чи впораюся я?</div>
-        <div class="bubble reveal d1"><small>тіло</small>Важкість у попереку…</div>
-        <div class="bubble reveal d2"><small>страх</small>Чи буде боляче?</div>
-        <div class="bubble reveal d3"><small>запитання</small>Чи можна уникнути розривів?</div>
-      </div>
-      <div>
-        <span class="eyebrow reveal">Скажи чесно</span>
-        <h2 class="reveal d1">Тіло змінюється. <em>І запитань стає більше</em></h2>
-        <p class="lead reveal d2">Важкість у попереку, напруга в тазу. А ще думки про пологи.</p>
-        <p class="reveal d2" style="margin-top:18px;color:var(--plum-soft)">Я точно знаю, як це — відчувати страх перед невідомим, боятися болю та сумніватися у власних силах. Мій авторський курс йоги для вагітних — це ваш простір турботи, що допомагає жінкам <b>самостійно</b>, м’яко та безпечно підготувати м’язи таза до пологів.</p>
-        <div class="quote reveal d3">Пологи починаються задовго до першої перейми.</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- PAUSE -->
-  <section class="pause" id="pause">
+  <!-- REVIEWS -->
+  <!-- DEMO: тексти відгуків вигадані для показу дизайну — перед публікацією замінити справжніми -->
+  <section class="reviews" id="reviews-more">
     <div class="wrap">
       <div class="section-head">
-        <span class="eyebrow reveal">Пауза для тебе</span>
-        <h2 class="reveal d1">Спробуй <em>прямо зараз</em></h2>
-        <p class="lead reveal d2">Хвилина повільного дихання — і тіло вже трохи м’якше.</p>
+        <div>
+          <span class="eyebrow reveal">Відгуки</span>
+          <h2 class="reveal d1">Що кажуть <em>учениці</em></h2>
+        </div>
       </div>
-      <div class="pause-grid">
-        <div class="pause-card reveal" id="breath">
-          <h3>Дихай зі мною</h3>
-          <p class="hint">Вдих через ніс — довгий, спокійний видих. Без напруги.</p>
-          <div class="breath-stage">
-            <div class="ring"></div><div class="ring r2"></div>
-            <div class="orb" id="orb"></div>
-            <div class="orb-label" id="orbLabel">Готова?</div>
-          </div>
-          <div class="breath-dots" id="breathDots"><i></i><i></i><i></i><i></i><i></i><i></i></div>
-          <button class="btn" id="breathBtn" type="button">Почати <span class="arrow">◦</span></button>
-        </div>
-        <div class="pause-card aff-card reveal d1">
-          <h3>Афірмація на сьогодні</h3>
-          <p class="hint">Торкнись картки — і візьми з собою слова підтримки.</p>
-          <div class="deck" id="deck" role="button" tabindex="0" aria-label="Витягнути картку з афірмацією">
-            <div class="flip">
-              <div class="face back"><img src="assets/lotus.svg" alt=""><span>Витягни картку</span></div>
-              <div class="face front"><p id="affText"></p><span class="n" id="affNum"></span></div>
-            </div>
-          </div>
-          <button class="btn btn-ghost" id="affBtn" type="button">Інша картка <span class="arrow">↻</span></button>
-        </div>
+      <div class="reviews-grid">
+        <figure class="review reveal">
+          <blockquote>Займалась до самих пологів. Рухи з шостого заняття реально допомогли під час перейм — я знала, що робити зі своїм тілом, а не просто терпіла.</blockquote>
+          <figcaption><b>Катерина</b><span>народила у вересні</span></figcaption>
+        </figure>
+        <figure class="review reveal d1">
+          <blockquote>Зручно, що можна займатися в будь-який час. У мене робота і старша дитина, тож 30 хвилин увечері — ідеально. Казка на ніч — окрема любов.</blockquote>
+          <figcaption><b>Анастасія</b><span>24 тиждень</span></figcaption>
+        </figure>
+        <figure class="review reveal d2">
+          <blockquote>Купив курс дружині в подарунок, бо бачив, як їй важко з попереком і як вона хвилюється перед пологами. Тепер вона щовечора займається, спокійніша, і навіть мене підключила до дихальних вправ.</blockquote>
+          <figcaption><b>Дмитро</b><span>купив курс дружині · 30 тиждень</span></figcaption>
+        </figure>
       </div>
     </div>
   </section>
@@ -1070,14 +1118,12 @@
           <span>6 відеозанять</span><span>Бонус: казка на ніч</span><span>Закрита група</span><span>Щомісячні ефіри</span><span>Доступ на 1 рік</span>
         </div>
         <div class="big-price">
-          <b>239<small>грн</small></b>
-          <div class="old"><s>1200 грн</s><span class="off">−80%</span></div>
+          <b>449<small>грн</small></b>
+          <div class="old"><s>1200 грн</s><span class="off">−63%</span></div>
         </div>
         <p class="timer-label">До кінця акції</p>
         <div class="timer" id="timer">
-          <div><b data-t="d">00</b><span>днів</span></div>
-          <div><b data-t="h">00</b><span>годин</span></div>
-          <div><b data-t="m">00</b><span>хвилин</span></div>
+          <div><b data-t="m">15</b><span>хвилин</span></div>
           <div><b data-t="s">00</b><span>секунд</span></div>
         </div>
         <a class="btn" href="#price" data-checkout>Отримати доступ <span class="arrow">→</span></a>
@@ -1146,8 +1192,13 @@
   </div>
 </footer>
 
+<a class="cart-fab" href="#price" data-checkout aria-label="Кошик — перейти до оплати">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 8h14l-1 12H6L5 8z"/><path d="M9 8V6a3 3 0 0 1 6 0v2"/></svg>
+  <span class="count">1</span>
+</a>
+
 <div class="sticky-cta" id="stickyCta">
-  <div><b>239 грн</b><s>1200</s></div>
+  <div><b>449 грн</b><s>1200</s></div>
   <a href="#price" data-checkout>Хочу на курс</a>
 </div>
 
@@ -1177,10 +1228,10 @@
         <li>Доступ на 1 рік</li>
       </ul>
       <div class="co-price">
-        <b>239<small>грн</small></b>
-        <div><s>1200 грн</s><span class="off">−80%</span></div>
+        <b>449<small>грн</small></b>
+        <div><s>1200 грн</s><span class="off">−63%</span></div>
       </div>
-      <p class="co-timer">Ціна діє ще <span id="coTimer">00:00:00</span></p>
+      <p class="co-timer">Ціна діє ще <span id="coTimer">15:00</span></p>
       <p class="co-guarantee"><span>14</span> днів гарантії — поверну кошти без зайвих запитань</p>
     </aside>
 
@@ -1217,7 +1268,7 @@
         </label>
         <em class="co-err co-err-agree">Потрібна твоя згода</em>
 
-        <button class="btn co-pay" type="submit"><span class="co-pay-label">Оплатити 239 грн</span> <span class="arrow">→</span></button>
+        <button class="btn co-pay" type="submit"><span class="co-pay-label">Оплатити 449 грн</span> <span class="arrow">→</span></button>
         <p class="co-secure">🔒 Дані картки вводяться на захищеній сторінці платіжного сервісу</p>
       </form>
 
@@ -1234,11 +1285,11 @@
 
 <script>
   // ---- Налаштування ----
-  const SALE_DEADLINE = '2026-11-18T00:00:00+02:00';     // кінець акції (Київ)
+  const SALE_MINUTES = 15;                               // таймер акції, перезапускається при кожному завантаженні
   const PAYMENT = {
     provider: null,          // 'wayforpay' | 'liqpay' | 'monobank' | ... — поки null = демо
     payUrl: '',              // готове платіжне посилання сервісу (найпростіший варіант для статичного сайту)
-    amount: 239, currency: 'UAH', product: 'Йога для вагітних — онлайн-курс'
+    amount: 449, currency: 'UAH', product: 'Йога для вагітних — онлайн-курс'
   };
 
   // Always open at the top on reload: drop #section from the URL, no scroll restoration
@@ -1504,7 +1555,7 @@
     btn.querySelector('.co-pay-label').textContent = 'Переходимо до оплати…';
     const res = await startPayment(order);
     btn.disabled = false; btn.classList.remove('loading');
-    btn.querySelector('.co-pay-label').textContent = 'Оплатити 239 грн';
+    btn.querySelector('.co-pay-label').textContent = 'Оплатити 449 грн';
     if (res.redirected) return;
     document.getElementById('coName').textContent = order.name;
     document.getElementById('coDoneText').textContent = res.demo
@@ -1515,25 +1566,35 @@
   });
 
   // Countdown
-  const deadline = new Date(SALE_DEADLINE).getTime();
+  const deadline = Date.now() + SALE_MINUTES * 6e4;
   const tEls = {}; document.querySelectorAll('[data-t]').forEach(b => tEls[b.dataset.t] = b);
   const pad = n => String(n).padStart(2, '0');
   (function tick() {
     const left = Math.max(0, deadline - Date.now());
-    tEls.d.textContent = pad(Math.floor(left / 864e5));
-    tEls.h.textContent = pad(Math.floor(left / 36e5) % 24);
-    tEls.m.textContent = pad(Math.floor(left / 6e4) % 60);
+    tEls.m.textContent = pad(Math.floor(left / 6e4));
     tEls.s.textContent = pad(Math.floor(left / 1e3) % 60);
-    document.getElementById('coTimer').textContent = pad(Math.floor(left / 36e5)) + ':' + pad(Math.floor(left / 6e4) % 60) + ':' + pad(Math.floor(left / 1e3) % 60);
+    document.getElementById('coTimer').textContent = pad(Math.floor(left / 6e4)) + ':' + pad(Math.floor(left / 1e3) % 60);
     if (left > 0) setTimeout(tick, 1000);
   })();
 
-  // Sticky mobile CTA: visible after hero, hidden over price section
+  // Cart: switch to the light variant while it floats over a dark block
+  const cart = document.querySelector('.cart-fab'), darkEls = document.querySelectorAll('.feel, .price-card, .bonus');
+  let cartTick = false;
+  const cartTone = () => {
+    cartTick = false;
+    const r = cart.getBoundingClientRect(), x = r.left + r.width / 2, y = r.top + r.height / 2;
+    cart.classList.toggle('on-dark', [...darkEls].some(el => { const b = el.getBoundingClientRect(); return x >= b.left && x <= b.right && y >= b.top && y <= b.bottom; }));
+  };
+  const queueCartTone = () => { if (!cartTick) { cartTick = true; requestAnimationFrame(cartTone); } };
+  addEventListener('scroll', queueCartTone, { passive: true }); addEventListener('resize', queueCartTone); cartTone();
+
+  // Sticky mobile CTA: visible after a short scroll, hidden while the price button is on screen
   const sticky = document.getElementById('stickyCta');
-  const heroEl = document.querySelector('.hero'), priceEl = document.getElementById('price');
+  const priceEl = document.querySelector('.price-card .btn');
   let pastHero = false, atPrice = false;
   const upd = () => sticky.classList.toggle('show', pastHero && !atPrice);
-  new IntersectionObserver(([e]) => { pastHero = !e.isIntersecting; upd(); }).observe(heroEl);
+  const onScroll = () => { const p = scrollY > 200; if (p !== pastHero) { pastHero = p; upd(); } };
+  addEventListener('scroll', onScroll, { passive: true }); onScroll();
   new IntersectionObserver(([e]) => { atPrice = e.isIntersecting; upd(); }).observe(priceEl);
 </script>
 </body>
