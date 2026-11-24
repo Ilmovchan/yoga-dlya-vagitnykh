@@ -810,7 +810,7 @@
         <div class="arch-outline"></div>
         <img class="hero-lotus" src="assets/lotus.svg" alt="">
         <div class="arch" data-open-video role="button" tabindex="0" aria-label="Дивитися відео-привітання від Анни">
-          <video id="teaser" src="assets/video-teaser.mp4" poster="assets/hero-preview-v2.jpg" autoplay muted loop playsinline preload="auto" disablepictureinpicture></video>
+          <video id="teaser" src="v/video-teaser.mp4" poster="assets/hero-preview-v2.jpg" autoplay muted loop playsinline preload="auto" disablepictureinpicture></video>
           <div class="arch-caption">
             <div>
               <strong>Привіт, я Анна</strong>
@@ -1009,7 +1009,7 @@
         <div class="combo">
         <div class="lesson-video reveal">
           <div class="lv-frame" id="lessonFrame">
-            <video src="assets/lesson-fragment.mp4" poster="assets/lesson-fragment.jpg" playsinline preload="none"></video>
+            <video src="v/lesson-fragment.mp4" poster="assets/lesson-fragment.jpg" playsinline preload="none"></video>
             <img class="lv-lotus" src="assets/lotus.svg" alt="">
             <button class="lv-badge" type="button" aria-label="Дивитися фрагмент уроку">
               <svg class="ring" viewBox="0 0 120 120" aria-hidden="true">
@@ -1468,7 +1468,7 @@
   const modal = document.getElementById('modal');
   const mv = document.getElementById('modalVideo');
   const src = (innerWidth > 900 && !(navigator.connection && navigator.connection.saveData))
-    ? 'assets/welcome-1080.mp4' : 'assets/welcome-720.mp4';
+    ? 'v/welcome-1080.mp4' : 'v/welcome-720.mp4';
   function openVideo() {
     if (!mv.src) mv.src = src;
     modal.classList.add('open'); modal.setAttribute('aria-hidden', 'false');

@@ -15,9 +15,69 @@ export default {
     if (url.pathname === '/api/checkout' && req.method === 'POST') return checkout(req, env, url);
     if (url.pathname === '/pay/wayforpay/return') return paymentReturn(req, env);
     if (url.pathname === '/api/wayforpay/callback' && req.method === 'POST') return callback(req, env);
+    if (/^\/v\/[\w.-]+\.mp4$/.test(url.pathname)) return video(req, env, '/assets/' + url.pathname.slice(3));
     return env.ASSETS.fetch(req);
   }
 };
+
+// Статичні файли Workers не віддають Range (206), а без нього відео стартує повільно,
+// не перемотується, а Safari на iOS може взагалі не відтворити. Тому відео йдуть через /v/<файл>
+// (такого шляху серед файлів немає, тож запит гарантовано потрапляє сюди), а шматок вирізаємо самі,
+// потоком — без завантаження всього файлу в пам'ять.
+async function video(req, env, assetPath) {
+  const assetUrl = new URL(assetPath, req.url);
+  const res = await env.ASSETS.fetch(assetUrl);
+  if (res.status !== 200) return res;
+  const headers = new Headers(res.headers);
+  headers.set('Accept-Ranges', 'bytes');
+  headers.set('Cache-Control', 'public, max-age=86400, stale-while-revalidate=604800');
+  if (req.headers.get('If-None-Match') && req.headers.get('If-None-Match') === res.headers.get('ETag')) {
+    res.body?.cancel();
+    return new Response(null, { status: 304, headers });
+  }
+  const size = await assetSize(env, assetUrl, res);
+  headers.set('Content-Length', String(size));
+
+  const m = /^bytes=(\d*)-(\d*)$/.exec(req.headers.get('Range') ?? '');
+  if (!m || (!m[1] && !m[2])) return new Response(req.method === 'HEAD' ? null : res.body, { status: 200, headers });
+
+  let start = m[1] ? Number(m[1]) : Math.max(0, size - Number(m[2]));   // "bytes=-N" — останні N байт
+  let end = m[1] && m[2] ? Math.min(Number(m[2]), size - 1) : size - 1;
+  if (start >= size || start > end) {
+    res.body?.cancel();
+    return new Response(null, { status: 416, headers: { 'Content-Range': `bytes */${size}` } });
+  }
+  headers.set('Content-Range', `bytes ${start}-${end}/${size}`);
+  headers.set('Content-Length', String(end - start + 1));
+  if (req.method === 'HEAD' || !res.body) return new Response(null, { status: 206, headers });
+  return new Response(res.body.pipeThrough(slice(start, end)), { status: 206, headers });
+}
+
+// Усередині воркера ASSETS не дає Content-Length, тож розмір рахуємо один раз і запам'ятовуємо
+// (ключ включає ETag — після оновлення файлу розмір перерахується).
+const sizes = new Map();
+async function assetSize(env, assetUrl, res) {
+  const key = assetUrl.pathname + (res.headers.get('ETag') ?? '');
+  if (!sizes.has(key)) {
+    const reader = (await env.ASSETS.fetch(assetUrl)).body.getReader();
+    let n = 0;
+    for (let r; !(r = await reader.read()).done;) n += r.value.byteLength;
+    sizes.set(key, n);
+  }
+  return sizes.get(key);
+}
+
+function slice(start, end) {
+  let pos = 0;
+  return new TransformStream({
+    transform(chunk, ctrl) {
+      const from = Math.max(start - pos, 0), to = Math.min(end + 1 - pos, chunk.byteLength);
+      if (from < to) ctrl.enqueue(chunk.subarray(from, to));
+      pos += chunk.byteLength;
+      if (pos > end) ctrl.terminate();
+    }
+  });
+}
 
 const sign = (secret, parts) => createHmac('md5', secret).update(parts.join(';')).digest('hex');
 const json = (data, status = 200) => new Response(JSON.stringify(data), { status, headers: { 'Content-Type': 'application/json' } });

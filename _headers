@@ -4,3 +4,7 @@ https://exoticcalm-dev.exoticcalm.workers.dev/*
 
 https://exoticcalm.exoticcalm.workers.dev/*
   X-Robots-Tag: noindex, nofollow
+
+# Картинки й відео кешуються в браузері на добу (після оновлення файлу — до доби старої версії)
+/assets/*
+  Cache-Control: public, max-age=86400, stale-while-revalidate=604800
