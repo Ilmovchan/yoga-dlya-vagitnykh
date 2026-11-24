@@ -1274,9 +1274,10 @@
 
       <div class="co-done" id="coDone" hidden>
         <img src="assets/lotus.svg" alt="">
-        <h2>Дякую, <em id="coName">мила</em>!</h2>
+        <h2 id="coDoneTitle">Дякую, <em id="coName">мила</em>!</h2>
         <p id="coDoneText">Зараз відкриється сторінка оплати. Після оплати доступ прийде в Telegram.</p>
         <p class="co-demo" id="coDemo" hidden>Прототип: платіжний сервіс ще не підключено, тому оплата не відбулася.</p>
+        <button class="btn" type="button" id="coRetry" hidden>Спробувати ще раз <span class="arrow">→</span></button>
         <button class="btn btn-ghost" type="button" data-co-close>Повернутися на сайт</button>
       </div>
     </div>
@@ -1286,11 +1287,8 @@
 <script>
   // ---- Налаштування ----
   const SALE_MINUTES = 15;                               // таймер акції, перезапускається при кожному завантаженні
-  const PAYMENT = {
-    provider: null,          // 'wayforpay' | 'liqpay' | 'monobank' | ... — поки null = демо
-    payUrl: '',              // готове платіжне посилання сервісу (найпростіший варіант для статичного сайту)
-    amount: 449, currency: 'UAH', product: 'Йога для вагітних — онлайн-курс'
-  };
+  // Ціна для оплати задається на сервері (src/worker.js); тут — лише для відображення
+  const PAYMENT = { amount: 449, currency: 'UAH', product: 'Йога для вагітних — онлайн-курс' };
 
   // Always open at the top on reload: drop #section from the URL, no scroll restoration
   if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
@@ -1530,15 +1528,52 @@
     if (e.target.name === 'agree') coForm.classList.remove('bad-agree');
   });
 
-  // Точка підключення платіжного сервісу.
-  // Варіант 1 (без сервера): PAYMENT.payUrl = готове посилання на оплату → редірект.
-  // Варіант 2 (WayForPay / LiqPay / monobank API): order → свій бекенд/функція створює рахунок з підписом
-  //   і повертає URL сторінки оплати → редірект туди.
+  // Оплата: сервер (/api/checkout) створює замовлення і підписану форму WayForPay → відправляємо її.
+  // Якщо оплату на сервері не налаштовано (503) — демо-режим без оплати.
   async function startPayment(order) {
-    if (PAYMENT.payUrl) { location.href = PAYMENT.payUrl; return { redirected: true }; }
-    console.info('[checkout] demo order', order);
-    await new Promise(r => setTimeout(r, 1200));
-    return { demo: true };
+    let res;
+    try {
+      res = await fetch('/api/checkout', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(order) });
+    } catch { return { error: true }; }
+    if (res.status === 503) { console.info('[checkout] demo order', order); return { demo: true }; }
+    if (!res.ok) return { error: true };
+    const { action, fields } = await res.json();
+    try { sessionStorage.setItem('coName', order.name); } catch {}
+    const form = document.createElement('form');
+    form.method = 'POST'; form.action = action; form.acceptCharset = 'utf-8'; form.hidden = true;
+    for (const [k, v] of Object.entries(fields)) for (const val of [].concat(v)) {
+      const input = document.createElement('input');
+      input.type = 'hidden'; input.name = Array.isArray(v) ? k + '[]' : k; input.value = val;
+      form.append(input);
+    }
+    document.body.append(form);
+    form.submit();
+    return { redirected: true };
+  }
+
+  // Повернення зі сторінки оплати: /?payment=success|pending|fail
+  const PAY_RESULT = {
+    success: ['Дякую, <em id="coName">мила</em>!', 'Оплата пройшла. Доступ до уроків прийде в Telegram найближчим часом.'],
+    pending: ['Майже готово', 'Оплата обробляється. Щойно банк її підтвердить, доступ прийде в Telegram.'],
+    fail: ['Оплата не пройшла', 'Кошти не списано. Спробуй ще раз або скористайся іншою карткою.']
+  };
+  function showPaymentResult(kind) {
+    openCheckout();
+    coForm.hidden = true; coDone.hidden = false;
+    document.getElementById('coDoneTitle').innerHTML = PAY_RESULT[kind][0];
+    document.getElementById('coDoneText').textContent = PAY_RESULT[kind][1];
+    document.getElementById('coDemo').hidden = true;
+    document.getElementById('coRetry').hidden = kind !== 'fail';
+    let name = null;
+    try { name = sessionStorage.getItem('coName'); } catch {}
+    const nameEl = document.getElementById('coName');
+    if (nameEl && name) nameEl.textContent = name;
+  }
+  document.getElementById('coRetry').addEventListener('click', openCheckout);
+  const payResult = new URLSearchParams(location.search).get('payment');
+  if (PAY_RESULT[payResult]) {
+    history.replaceState(null, '', location.pathname);
+    showPaymentResult(payResult);
   }
 
   coForm.addEventListener('submit', async e => {
@@ -1557,7 +1592,13 @@
     btn.disabled = false; btn.classList.remove('loading');
     btn.querySelector('.co-pay-label').textContent = 'Оплатити 449 грн';
     if (res.redirected) return;
+    if (res.error) {
+      btn.querySelector('.co-pay-label').textContent = 'Не вдалося — спробувати ще раз';
+      return;
+    }
+    document.getElementById('coDoneTitle').innerHTML = PAY_RESULT.success[0];
     document.getElementById('coName').textContent = order.name;
+    document.getElementById('coRetry').hidden = true;
     document.getElementById('coDoneText').textContent = res.demo
       ? 'Твоє замовлення сформовано. Після оплати доступ прийде в Telegram.'
       : 'Зараз відкриється сторінка оплати. Після оплати доступ прийде в Telegram.';

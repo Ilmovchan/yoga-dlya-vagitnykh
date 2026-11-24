@@ -1,18 +1,30 @@
 {
   "name": "exoticcalm",
+  "main": "src/worker.js",
   "compatibility_date": "2026-11-01",
+  "compatibility_flags": ["nodejs_compat"],
   "assets": {
     "directory": "./",
-    "not_found_handling": "404-page"
+    "binding": "ASSETS",
+    "not_found_handling": "404-page",
+    "run_worker_first": ["/api/*", "/pay/*"]
   },
   "env": {
     // Тестова версія: npx wrangler deploy --env dev
+    // Оплата через тестового мерчанта WayForPay — гроші не списуються
     "dev": {
       "name": "exoticcalm-dev",
       "assets": {
         "directory": "./",
-        "not_found_handling": "404-page"
-      }
+        "binding": "ASSETS",
+        "not_found_handling": "404-page",
+        "run_worker_first": ["/api/*", "/pay/*"]
+      },
+      "vars": {
+        "WFP_MERCHANT": "test_merch_n1",
+        "ENV_LABEL": "DEV"
+      },
+      "kv_namespaces": [{ "binding": "ORDERS", "id": "972e75afc866444fb3028915861fc73e" }]
     }
   }
 }

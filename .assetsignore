@@ -4,3 +4,7 @@
 wrangler.jsonc
 .wrangler
 .DS_Store
+src
+node_modules
+package.json
+package-lock.json
