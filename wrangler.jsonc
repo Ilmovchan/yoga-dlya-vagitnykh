@@ -1,0 +1,18 @@
+{
+  "name": "exoticcalm",
+  "compatibility_date": "2026-11-01",
+  "assets": {
+    "directory": "./",
+    "not_found_handling": "404-page"
+  },
+  "env": {
+    // Тестова версія: npx wrangler deploy --env dev
+    "dev": {
+      "name": "exoticcalm-dev",
+      "assets": {
+        "directory": "./",
+        "not_found_handling": "404-page"
+      }
+    }
+  }
+}

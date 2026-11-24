@@ -1,0 +1,6 @@
+# Тестова версія і технічна адреса прода не індексуються пошуковиками
+https://exoticcalm-dev.exoticcalm.workers.dev/*
+  X-Robots-Tag: noindex, nofollow
+
+https://exoticcalm.exoticcalm.workers.dev/*
+  X-Robots-Tag: noindex, nofollow
